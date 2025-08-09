@@ -1,4 +1,5 @@
-// ==== REPLACE WITH YOUR FIREBASE CONFIG ====
+// ==== 1. Firebase Configuration ====
+// Replace with your Firebase project's configuration
 const firebaseConfig = {
   apiKey: "AIzaSyAJ74jXz_YAgmzc0p4bvJDm2Te0jWqnhuo",
   authDomain: "trial-2-d1f22.firebaseapp.com",
@@ -8,52 +9,52 @@ const firebaseConfig = {
   appId: "1:900061609335:web:788250474d50eca3047572",
   measurementId: "G-X0MDL7HEBP"
 };
-// ============================================
 
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 
-// Handle form submit
+// ==== 2. Cloud Function URL ====
+const CLOUD_FUNCTION_URL = "https://us-central1-YOUR_PROJECT_ID.cloudfunctions.net/sendApprovalEmail";
+
+// ==== 3. Form Submission Handler ====
 document.getElementById("purchaseForm").addEventListener("submit", async (e) => {
-  e.preventDefault();
+    e.preventDefault();
 
-  const requesterName = document.getElementById("requesterName").value.trim();
-  const requesterEmail = document.getElementById("requesterEmail").value.trim();
-  const item = document.getElementById("item").value.trim();
-  const quantity = parseInt(document.getElementById("quantity").value.trim());
-  const price = parseFloat(document.getElementById("price").value.trim());
+    const requesterName = document.getElementById("requesterName").value;
+    const item = document.getElementById("item").value;
+    const quantity = parseInt(document.getElementById("quantity").value);
+    const price = parseFloat(document.getElementById("price").value);
 
-  if (!requesterName || !requesterEmail || !item || isNaN(quantity) || isNaN(price)) {
-    alert("Please fill in all fields correctly.");
-    return;
-  }
+    try {
+        // 3.1 Save request to Firestore
+        const docRef = await db.collection("requests").add({
+            requesterName,
+            item,
+            quantity,
+            price,
+            step: 1, // First approval step
+            status: "Pending",
+            createdAt: firebase.firestore.FieldValue.serverTimestamp()
+        });
 
-  try {
-    // Add request to Firestore
-    const docRef = await db.collection("requests").add({
-      requesterName,
-      requesterEmail,
-      item,
-      quantity,
-      price,
-      status: "Pending",
-      step: 1,
-      createdAt: firebase.firestore.FieldValue.serverTimestamp()
-    });
+        console.log("Document written with ID: ", docRef.id);
 
-    // Call backend function to send first approval email
-    // (We'll set this up later in Firebase Functions)
-    await fetch(`https://us-central1-${firebaseConfig.projectId}.cloudfunctions.net/sendApprovalEmail`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ requestId: docRef.id })
-    });
+        // 3.2 Call Cloud Function to send approval email
+        const response = await fetch(CLOUD_FUNCTION_URL, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ requestId: docRef.id })
+        });
 
-    alert("Purchase request submitted successfully!");
-    document.getElementById("purchaseForm").reset();
-  } catch (error) {
-    console.error("Error submitting request:", error);
-    alert("Error submitting request. Please try again.");
-  }
+        if (response.ok) {
+            alert("Request submitted and email sent to approver.");
+        } else {
+            alert("Request saved but failed to send email.");
+        }
+
+    } catch (error) {
+        console.error("Error adding document: ", error);
+        alert("Error submitting request.");
+    }
 });

@@ -1,12 +1,12 @@
 // ==== REPLACE WITH YOUR FIREBASE CONFIG ====
 const firebaseConfig = {
-  apiKey: "AIzaSyCF2nsIv6Jg8kR3qf0KSDJSCA0M-6JOv40",
-  authDomain: "online-request-form.firebaseapp.com",
-  projectId: "online-request-form",
-  storageBucket: "online-request-form.firebasestorage.app",
-  messagingSenderId: "62203603415",
-  appId: "1:62203603415:web:d5fc2773c8c23e40098392",
-  measurementId: "G-9NLV8K4QJP"
+  apiKey: "AIzaSyAJ74jXz_YAgmzc0p4bvJDm2Te0jWqnhuo",
+  authDomain: "trial-2-d1f22.firebaseapp.com",
+  projectId: "trial-2-d1f22",
+  storageBucket: "trial-2-d1f22.firebasestorage.app",
+  messagingSenderId: "900061609335",
+  appId: "1:900061609335:web:788250474d50eca3047572",
+  measurementId: "G-X0MDL7HEBP"
 };
 // ============================================
 

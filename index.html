@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Purchase Request</title>
+    <style>
+      body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial; padding: 16px; background:#f7f7f8; }
+      .card { max-width:720px; margin: 10px auto; background:#fff; border-radius:12px; padding:16px; box-shadow:0 6px 18px rgba(0,0,0,0.06); }
+      input, textarea { width:100%; padding:10px; margin-top:6px; border:1px solid #ddd; border-radius:8px; box-sizing:border-box; }
+      label { display:block; margin-top:12px; font-weight:600; font-size:14px; }
+      .row { display:flex; gap:8px; margin-top:12px; }
+      .row > div { flex:1; }
+      button { width:100%; padding:12px; margin-top:16px; border-radius:10px; border:0; background:#0b63d3; color:#fff; font-size:16px; }
+      .muted { color:#666; font-size:14px; margin-top:8px; }
+    </style>
+  </head>
+  <body>
+    <div class="card">
+      <h2 style="margin:0 0 8px 0">Purchase Request</h2>
+      <p class="muted">Mobile-friendly form — submits directly to Firestore.</p>
+      <form id="requestForm">
+        <label>Your name
+          <input id="name" required placeholder="e.g. Ana Santos" />
+        </label>
+        <label>Your email
+          <input id="email" type="email" required placeholder="you@company.com" />
+        </label>
+        <label>Item description
+          <input id="item" required placeholder="Item name or description" />
+        </label>
+        <div class="row">
+          <div><label>Quantity<input id="qty" type="number" min="1" value="1" required /></label></div>
+          <div><label>Estimated price<input id="price" type="number" step="0.01" min="0" placeholder="0.00" /></label></div>
+        </div>
+        <label>Reason / Notes
+          <textarea id="reason" rows="4" placeholder="Why is this purchase needed?"></textarea>
+        </label>
+        <button id="submitBtn" type="submit">Submit request</button>
+      </form>
+      <div id="status" class="muted"></div>
+    </div>
+
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>

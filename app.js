@@ -1,11 +1,12 @@
 // ==== REPLACE WITH YOUR FIREBASE CONFIG ====
 const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-  projectId: "YOUR_PROJECT_ID",
-  storageBucket: "YOUR_PROJECT_ID.appspot.com",
-  messagingSenderId: "YOUR_SENDER_ID",
-  appId: "YOUR_APP_ID"
+  apiKey: "AIzaSyCF2nsIv6Jg8kR3qf0KSDJSCA0M-6JOv40",
+  authDomain: "online-request-form.firebaseapp.com",
+  projectId: "online-request-form",
+  storageBucket: "online-request-form.firebasestorage.app",
+  messagingSenderId: "62203603415",
+  appId: "1:62203603415:web:d5fc2773c8c23e40098392",
+  measurementId: "G-9NLV8K4QJP"
 };
 // ============================================
 
